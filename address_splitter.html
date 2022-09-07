@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset=utf-8>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Address Splitter</title>
+    <style>
+        /* Style inputs with type="text", select elements and textareas */
+        input[type=text],
+        select,
+        textarea {
+            width: 100%;
+            /* Full width */
+            padding: 12px;
+            /* Some padding */
+            border: 1px solid #ccc;
+            /* Gray border */
+            border-radius: 4px;
+            /* Rounded borders */
+            box-sizing: border-box;
+            /* Make sure that padding and width stays in place */
+            margin-top: 6px;
+            /* Add a top margin */
+            margin-bottom: 16px;
+            /* Bottom margin */
+            resize: vertical
+                /* Allow the user to vertically resize the textarea (not horizontally) */
+        }
+
+        /* Style the submit button with a specific background color etc */
+        input[type=submit] {
+            background-color: #04AA6D;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        /* When moving the mouse over the submit button, add a darker green color */
+        input[type=submit]:hover {
+            background-color: #45a049;
+        }
+
+        /* Add a background color and some padding around the form */
+        .container {
+            border-radius: 5px;
+            background-color: #f2f2f2;
+            padding: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <a href="./index.html"> home :P</a>
+    <h2>Address Splitter</h2>
+
+
+    <div class="container">
+        <form>
+
+            <label for="input">Te splitsen input</label>
+            <textarea id="input" name="subject" placeholder="zet je eigen input hier.. bv `1e van straatnaam 10aa`"
+                style="height:500px">
+1evanstraatnaam 1
+1evanstraatnaam 1a
+1evanstraatnaam 1aa
+1evanstraatnaam 10a
+1evanstraatnaam 10aa
+1e van straatnaam 1
+1e van straatnaam 1a
+1e van straatnaam 1aa
+1e van straatnaam 10aa
+1e van straatnaam 1
+1e van straatnaam 1 a
+1e van straatnaam 1 aa
+1e van straatnaam 10 aa
+1e van straatnaam 1    
+1e van straatnaam 1    a
+1e van straatnaam 1   aa
+1e van straatnaam 10      aa
+</textarea>
+
+
+            <!-- <input type="submit" value="Convert!"> -->
+        </form>
+        <button class="button" onclick="convert()">Split!</button><br>
+    </div>
+
+    <script>
+
+        function convert() {
+            let result = []
+            let input = document.getElementById("input").value;
+            const regexStreetNumberExt = /(?<street>.+[a-zA-Z])[;, ]*(?<number>\d+)[ ;,]*(?<ext>.+)*/;
+            for (let line of input.split("\n")) {
+                line = line.trim()
+                if (line) {
+                    const match = line.match(regexStreetNumberExt);
+                    if (match.groups.ext) {
+                        result.push(`${match.groups.street.trim()};${match.groups.number.trim()};${match.groups.ext.trim()}`)
+                    }
+                    else {
+                        result.push(`${match.groups.street.trim()};${match.groups.number.trim()};`)
+                    }
+                }
+            }
+            document.getElementById("input").value = result.join("\n");
+        }
+    </script>
+</body>
+
+</html>

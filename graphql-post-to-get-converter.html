@@ -53,8 +53,8 @@
 </head>
 
 <body>
+    <a href="./index.html"> home :P</a>
     <h2>GraphQL POST to GET converter</h2>
-
 
 
     <div class="container">
@@ -83,17 +83,16 @@
 
     <script>
         var default_query = `query GetBestSellers($category: ProductCategory) {
-            bestSellers(category: $category) {
-                title
-            }
-        }`;
+                bestSellers(category: $category) {
+                    title
+                }
+            }`;
 
-        var default_variables = `{"category": "BOOKS"}`
+
 
         onload = (event) => {
             document.getElementById("hostname").value = "https://yourhostname.com/graphql?query=";
             document.getElementById("grapql_query").value = default_query;
-            document.getElementById("variables").value = default_variables;
         };
 
         function convert_body(input) {
@@ -109,11 +108,10 @@
 
             let hostname = document.getElementById("hostname").value;
             let variables = "";
-            if (document.getElementById("variables").value && document.getElementById("variables").value != default_variables) {
+            if (document.getElementById("variables").value) {
                 variables = "&variables=" + convert_body(document.getElementById("variables").value);
             }
             document.getElementById("output").value = hostname + convert_body(grapql_query) + variables;
-            // document.getElementById("output").value = "https://yourhostname.com/graphql?query=" + encodeURIComponent(result.join("\n"));
             event.preventDefault();
         }
     </script>
